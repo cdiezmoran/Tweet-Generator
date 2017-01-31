@@ -15,6 +15,7 @@ def histogram(source_text):
             histogram[word] += 1
         else:
             histogram[word] = 1
+
     return histogram
 
 def unique_words(histogram):

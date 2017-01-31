@@ -18,6 +18,16 @@ def get_random_words():
 
     return words
 
+def isInt(value):
+    try:
+        int(value)
+        return True
+    except ValueError:
+        return False
+
 
 if __name__ == '__main__':
-    print ' '.join(get_random_words())
+    if isInt(sys.argv[1]):
+        print ' '.join(get_random_words())
+    else:
+        print 'Please input an int as an argument'
