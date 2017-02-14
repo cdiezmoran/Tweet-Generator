@@ -18,6 +18,8 @@ class Histogram(dict):
             else:
                 self[item] = 1
 
+        self.types = len(self)
+
     def count(self, item):
         """Return the count of the given item in this histogram, or 0"""
-        return self.get(word, 0)
+        return self.get(item, 0)
