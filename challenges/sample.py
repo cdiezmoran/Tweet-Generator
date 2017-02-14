@@ -1,10 +1,10 @@
 import sys
 import random
 import operator
-import word_analyzer
+from histogram import Histogram
 import file_reader
 
-def get_sample_from(histogram):
+def get_sample(histogram):
     sorted_histogram = sorted(histogram.items(), key=operator.itemgetter(1))
 
     total_sum = sum([tup[1] for tup in sorted_histogram])
@@ -21,5 +21,5 @@ def get_sample_from(histogram):
 if __name__ == '__main__':
     file_path = sys.argv[1]
     words = file_reader.get_words_only(file_path)
-    histogram = word_analyzer.histogram(words)
-    print get_sample_from(histogram)
+    histogram = Histogram(words);
+    print get_sample(histogram)

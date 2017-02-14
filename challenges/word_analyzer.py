@@ -2,7 +2,7 @@ import sys
 import re
 import file_reader
 
-def histogram(word_list):
+def create_histogram(word_list):
     histogram = {};
 
     for word in word_list:
@@ -21,6 +21,6 @@ def frequency(word, histogram):
 
 if __name__ == '__main__':
     words = file_reader.get_words_only('./sources/holmes.txt')
-    histogram = histogram(words)
+    histogram = create_histogram(words)
     print "Unique words: " + str(unique_words(histogram))
     print frequency('mystery', histogram)
