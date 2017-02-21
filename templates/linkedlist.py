@@ -1,6 +1,6 @@
 #!python
 
-from __future__ import print_function
+#from __future__ import print_function
 
 
 class Node(object):
@@ -45,23 +45,72 @@ class LinkedList(object):
 
     def length(self):
         """Return the length of this linked list by traversing its nodes"""
-        # TODO: count number of items
-        pass
+        count = 0
+        current = self.head
+
+        while current is not None:
+            count += 1
+            current = current.next
+
+        return count
 
     def append(self, item):
         """Insert the given item at the tail of this linked list"""
-        # TODO: append given item
-        pass
+        new_node = Node(item)
+
+        if self.tail == None and self.head == None:
+            self.tail = new_node
+            self.head = new_node
+        elif self.tail == self.head:
+            self.tail = new_node
+            self.head.next = new_node
+        else:
+            self.tail.next = new_node
+            self.tail = new_node
 
     def prepend(self, item):
         """Insert the given item at the head of this linked list"""
-        # TODO: prepend given item
-        pass
+        new_node = Node(item)
+
+        if self.head == None and self.tail == None:
+            self.tail = new_node
+            self.head = new_node
+        elif self.head == self.tail:
+            self.head = new_node
+            self.head.next = self.tail
+        else:
+            new_node.next = self.head
+            self.head = new_node
 
     def delete(self, item):
         """Delete the given item from this linked list, or raise ValueError"""
-        # TODO: find given item and delete if found
-        pass
+        current = self.head
+        last_node = None
+
+        while  (current is not None) and (current.data is not item):
+            last_node = current
+            current = current.next
+
+        print "Current after while: %s\n" % (current)
+
+        if current is None:
+            raise ValueError("Could not find %s in List." % (item))
+
+        if current == self.head and current == self.tail:
+            self.head = None
+            self.tail = None
+        elif current == self.head:
+            self.head = current.next
+            current.next = None
+        elif current == self.tail:
+            self.tail = last_node
+            last_node.next = None
+        else:
+            last_node.next = current.next
+            current.next = None
+
+
+        return 'Deleted item'
 
     def find(self, quality):
         """Return an item from this linked list satisfying the given quality"""
