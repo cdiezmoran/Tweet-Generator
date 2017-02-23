@@ -33,8 +33,11 @@ class HashTable(object):
 
     def values(self):
         """Return a list of all values in this hash table"""
-        # TODO: Collect all values in each of the buckets
-        pass
+        all_values = []
+        for bucket in self.buckets:
+            for key, value in bucket.items():
+                all_values.append(value)
+        return all_values
 
     def items(self):
         """Return a list of all items (key-value pairs) in this hash table"""
@@ -46,29 +49,43 @@ class HashTable(object):
 
     def length(self):
         """Return the length of this hash table by traversing its buckets"""
-        # TODO: Count number of key-value entries in each of the buckets
-        return 0
+        key_val_count = 0
+        for bucket in self.buckets:
+            for key, value in bucket.items():
+                key_val_count += 1
+        return key_val_count
 
     def contains(self, key):
         """Return True if this hash table contains the given key, or False"""
-        # TODO: Check if the given key exists in a bucket
-        pass
+        index = self._bucket_index(key)
+        value = self.buckets[index].find(lambda item: item[0] == key)
+        return value is not None
 
     def get(self, key):
         """Return the value associated with the given key, or raise KeyError"""
-        # TODO: Check if the given key exists and return its associated value
-        pass
+        index = self._bucket_index(key)
+        value = self.buckets[index].find(lambda item: item[0] == key)
+
+        if value is not None:
+            return value[1]
+
+        raise KeyError("%s is not a key on this hash table." % (key))
 
     def set(self, key, value):
         """Insert or update the given key with its associated value"""
-        # TODO: Insert or update the given key-value entry into a bucket
-        pass
+        index = self._bucket_index(key)
+        self.buckets[index].replace((lambda item: item[0] == key), (key, value))
 
     def delete(self, key):
         """Delete the given key from this hash table, or raise KeyError"""
-        # TODO: Find the given key and delete its entry if found
-        pass
+        index = self._bucket_index(key)
+        item = self.buckets[index].find(lambda item: item[0] == key)
 
+        if item is not None:
+            self.buckets[index].delete(item)
+            return
+
+        raise KeyError("%s is not a key on this hash table." % (key))
 
 def test_hash_table():
     ht = HashTable()
@@ -88,15 +105,15 @@ def test_hash_table():
     print('length: ' + str(ht.length()))
 
     # Enable this after implementing delete:
-    # print('Deleting entries:')
-    # ht.delete('I')
-    # print(ht)
-    # ht.delete('V')
-    # print(ht)
-    # ht.delete('X')
-    # print(ht)
-    # print('contains(X): ' + str(ht.contains('X')))
-    # print('length: ' + str(ht.length()))
+    print('Deleting entries:')
+    ht.delete('I')
+    print(ht)
+    ht.delete('V')
+    print(ht)
+    ht.delete('X')
+    print(ht)
+    print('contains(X): ' + str(ht.contains('X')))
+    print('length: ' + str(ht.length()))
 
 
 if __name__ == '__main__':

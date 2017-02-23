@@ -121,17 +121,6 @@ class LinkedList(object):
 
         return None
 
-    def replace(self, quality, new_data):
-        current = self.head
-
-        while current is not None:
-            if quality(current.data):
-                current.data = new_data
-                return
-            current = current.next
-
-        self.append(new_data)
-
 
 def test_linked_list():
     ll = LinkedList()
