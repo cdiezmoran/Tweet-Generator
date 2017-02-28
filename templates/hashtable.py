@@ -5,10 +5,12 @@ from linkedlist import LinkedList
 
 class HashTable(object):
 
+    # O(n)
     def __init__(self, init_size=8):
         """Initialize this hash table with the given initial size"""
         self.buckets = [LinkedList() for i in range(init_size)]
 
+    # O(n)
     def __str__(self):
         """Return a formatted string representation of this hash table"""
         items = ['{}: {}'.format(repr(k), repr(v)) for k, v in self.items()]
@@ -22,6 +24,7 @@ class HashTable(object):
         """Return the bucket index where the given key would be stored"""
         return hash(key) % len(self.buckets)
 
+    # O(n^2)
     def keys(self):
         """Return a list of all keys in this hash table"""
         # Collect all keys in each of the buckets
@@ -31,6 +34,7 @@ class HashTable(object):
                 all_keys.append(key)
         return all_keys
 
+    # O(n^2)
     def values(self):
         """Return a list of all values in this hash table"""
         all_values = []
@@ -39,6 +43,7 @@ class HashTable(object):
                 all_values.append(value)
         return all_values
 
+    # O(n)
     def items(self):
         """Return a list of all items (key-value pairs) in this hash table"""
         # Collect all pairs of key-value entries in each of the buckets
@@ -47,20 +52,22 @@ class HashTable(object):
             all_items.extend(bucket.items())
         return all_items
 
+    # O(n)
     def length(self):
         """Return the length of this hash table by traversing its buckets"""
-        key_val_count = 0
+        length = 0
         for bucket in self.buckets:
-            for key, value in bucket.items():
-                key_val_count += 1
-        return key_val_count
+            length += bucket.length()
+        return length
 
+    # Theta(n) - Omega(1)
     def contains(self, key):
         """Return True if this hash table contains the given key, or False"""
         index = self._bucket_index(key)
         value = self.buckets[index].find(lambda item: item[0] == key)
         return value is not None
 
+    # Theta(n) - Omega(1)
     def get(self, key):
         """Return the value associated with the given key, or raise KeyError"""
         index = self._bucket_index(key)
@@ -71,11 +78,13 @@ class HashTable(object):
 
         raise KeyError("%s is not a key on this hash table." % (key))
 
+    # Theta(n) - Omega(1)
     def set(self, key, value):
         """Insert or update the given key with its associated value"""
         index = self._bucket_index(key)
         self.buckets[index].replace((lambda item: item[0] == key), (key, value))
 
+    # Theta(n) - Omega(1)
     def delete(self, key):
         """Delete the given key from this hash table, or raise KeyError"""
         index = self._bucket_index(key)
