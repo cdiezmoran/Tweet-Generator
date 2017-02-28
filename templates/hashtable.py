@@ -60,14 +60,14 @@ class HashTable(object):
             length += bucket.length()
         return length
 
-    # Theta(n) - Omega(1)
+    # O(n) - Omega(1)
     def contains(self, key):
         """Return True if this hash table contains the given key, or False"""
         index = self._bucket_index(key)
         value = self.buckets[index].find(lambda item: item[0] == key)
         return value is not None
 
-    # Theta(n) - Omega(1)
+    # O(n) - Omega(1)
     def get(self, key):
         """Return the value associated with the given key, or raise KeyError"""
         index = self._bucket_index(key)
@@ -78,13 +78,13 @@ class HashTable(object):
 
         raise KeyError("%s is not a key on this hash table." % (key))
 
-    # Theta(n) - Omega(1)
+    # O(n) - Omega(1)
     def set(self, key, value):
         """Insert or update the given key with its associated value"""
         index = self._bucket_index(key)
         self.buckets[index].replace((lambda item: item[0] == key), (key, value))
 
-    # Theta(n) - Omega(1)
+    # O(n) - Omega(1)
     def delete(self, key):
         """Delete the given key from this hash table, or raise KeyError"""
         index = self._bucket_index(key)
